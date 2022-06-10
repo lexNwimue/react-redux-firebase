@@ -2,17 +2,23 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { createProject } from "../../store/actions/projectActions";
 
-const CreateProject = () => {
+const CreateProject = (props) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const handleChange = (e) => {
-    e.target.id === "title" ? setTitle(e.target.value) : console.log("");
-    e.target.id === "content" ? setContent(e.target.value) : console.log("");
+    if (e.target.id === "title") setTitle(e.target.value);
+    if (e.target.id === "content") setContent(e.target.value);
+  };
+
+  let state = {
+    title,
+    content,
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(title, content);
+    // console.log(title, content);
+    props.createProject(state);
   };
   return (
     <div className="container">
@@ -49,4 +55,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect()(CreateProject);
+export default connect(null, mapDispatchToProps)(CreateProject);
